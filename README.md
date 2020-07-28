@@ -36,9 +36,13 @@ We are going to run a couple INSERT/UPDATE/DELETE statements and put our SQL STA
 
 2. Pretend we are in the beginnings of an apocalyptic event. It started in Ohio. Update the `usersAddress` table and change every "address" in the state of OH to the text "REDACTED" since Ohio no longer exists. You should update 22 rows. Place this update statement in the section below. 
 
+UPDATE usersAddress 
+SET state = 'REDACTED'
+WHERE state = 'OH'
+
 3. Delete the user with the id of `114` from the `users` table.
 
-Did the above statment fail? Why? What does the error response say?
+Did the above statment fail? Why? What does the error response say? Yes, Error Code 1064.
 
 We cannot delete this user yet because other tables (usersContact, usersAddress) are children of this table. Remember when we talked about foreign keys in the last lesson? That means we need to delete the appropriate information from those tables before we can delete the user. 
 
@@ -51,19 +55,31 @@ Let's delete the appropriate information from `usersContact`, `usersAddress` and
 
 1. INSERT two users:
 
+INSERT FROM users 
+(first_name, last_name)
+VALUES 
+('test', 'user'), ('test2', 'user')
+
 
 2. UPDATE all Ohio addresses to "REDACTED":
+UPDATE usersAddress 
+SET state = 'REDACTED'
+WHERE state = 'OH'
 
 3. All three DELETES
 
 * DELETE from usersContact
 
+DELETE FROM usersContact WHERE user_id = 114;
+
 
 * DELETE from usersAddress
 
+DELETE FROM usersAddress WHERE user_id = 114;
 
 * DELETE from users
 
+DELETE FROM users WHERE id = 114;
 
 ## Summary
 
